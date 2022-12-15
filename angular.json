@@ -39,7 +39,10 @@
               "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/styles.scss",
               "src/tailwind.scss",
-              "src/zorro.less"
+              "src/zorro.less",
+              "./node_modules/@swimlane/ngx-datatable/index.css",
+              "./node_modules/@swimlane/ngx-datatable/themes/material.css",
+              "./node_modules/@swimlane/ngx-datatable/assets/icons.css"
             ],
             "scripts": []
           },
@@ -115,6 +118,5 @@
         }
       }
     }
-  },
-  "defaultProject": "editable-table"
+  }
 }
