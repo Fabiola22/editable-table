@@ -12,13 +12,17 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { LayoutComponent } from './components/layout/layout.component';
+import { TableComponent } from './components/table/table.component';
 
 registerLocaleData(en);
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LayoutComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
