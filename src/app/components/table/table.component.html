@@ -1,1 +1,19 @@
-<ngx-datatable [rows]="rows" [columns]="columns"></ngx-datatable>
+<ngx-datatable
+  [columnMode]="ColumnMode.force"
+  class="material striped"
+  [rows]="rows"
+  [columns]="columns"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="60">
+</ngx-datatable>
+
+<!-- Table Rows -->
+<ng-template #nameTpl let-row="row" let-value="value">
+  <div class="flex px-6">
+    <div class="block w-9	h-9 rounded-full overflow-hidden focus:outline-none focus:border-white mt-1 mr-2">
+      <img [src]="row.strDrinkThumb" class="h-full w-full object-cover">
+    </div>
+    <h2 class="pt-2">{{ row.strDrink }}</h2>
+  </div>
+</ng-template>
