@@ -8,12 +8,14 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { LayoutComponent } from './components/layout/layout.component';
 import { TableComponent } from './components/table/table.component';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 registerLocaleData(en);
 
@@ -29,13 +31,18 @@ registerLocaleData(en);
     AppRoutingModule,
     NzButtonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NzInputModule,
+    NzFormModule
   ],
   exports: [
     NzButtonModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NzInputModule,
+    NzFormModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }
