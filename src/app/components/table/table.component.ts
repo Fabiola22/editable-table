@@ -22,7 +22,8 @@ export class TableComponent implements OnInit {
     category: [''],
     tags: [''],
     glassType: [''],
-  });
+    validateTrigger: 'onBlur'
+  }, { updateOn: 'blur' });
 
   // Templates: Columns
   @ViewChild('defaultHdrTpl', { static: true })
@@ -49,6 +50,8 @@ export class TableComponent implements OnInit {
 
   name: string = '';
 
+  validationStatus = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private itemService: ItemService
@@ -56,7 +59,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
-
+    this.validationStatus = '';
     this.columns = [
       {
         name: 'Name',
@@ -101,11 +104,6 @@ export class TableComponent implements OnInit {
   }
 
   initializeForm() {
-    this.tableForm = this.formBuilder.group({
-      category: [''],
-      tags: [''],
-      glassType: [''],
-    });
     this.tableForm.addControl(this.name, new FormControl(''));
   }
 
@@ -114,6 +112,7 @@ export class TableComponent implements OnInit {
     let drink = this.rows[rowIndex];
     this.name = `${rowIndex}_name`;
     this.tableForm.addControl(this.name, new FormControl(''));
+    this.tableForm.controls[this.name].setValidators([Validators.required, Validators.maxLength(20)]);
     this.tableForm.patchValue({
       [this.name]: drink.strDrink,
     });
@@ -121,10 +120,21 @@ export class TableComponent implements OnInit {
   }
 
   updateValue(event: any, cell: string, rowIndex: number) {
-    this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = event.target.value;
-    this.rows = [...this.rows];
-    this.initializeForm();
+    if (this.tableForm.valid) {
+      this.validationStatus = 'success';
+      this.editing[rowIndex + '-' + cell] = false;
+      this.rows[rowIndex][cell] = event.target.value;
+      this.rows = [...this.rows];
+      this.initializeForm();
+    } else {
+      Object.values(this.tableForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+          this.validationStatus = 'error';
+        }
+      });
+    }
   }
 
 }

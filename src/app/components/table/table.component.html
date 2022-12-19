@@ -6,7 +6,7 @@
     [columns]="columns"
     [headerHeight]="45"
     [externalSorting]="true"
-    [rowHeight]="60">
+    [rowHeight]="75">
   </ngx-datatable>
 
   <!-- Columns -->
@@ -31,7 +31,7 @@
         class="pt-2 truncate">{{ row.strDrink }}
       </h2>
       <nz-form-item>
-        <nz-form-control nzErrorTip="Name is required">
+        <nz-form-control [nzValidateStatus]="validationStatus" [nzErrorTip]="nameError" nzHasFeedback>
           <input
             *ngIf="editing[rowIndex + '-strDrink']"
             nz-input
@@ -40,6 +40,9 @@
             required
             [id]="rowIndex + '_name'"
             (blur)="updateValue($event, 'strDrink', rowIndex)"/>
+            <ng-template #nameError let-control>
+              <ng-container *ngIf="editing[rowIndex + '-strDrink']">Name is required</ng-container>
+            </ng-template>
         </nz-form-control>
       </nz-form-item>
     </div>
