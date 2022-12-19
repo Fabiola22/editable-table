@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ColumnMode } from '@swimlane/ngx-datatable';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { ItemService } from 'src/app/services/item.service';
 
@@ -18,7 +18,11 @@ export class TableComponent implements OnInit {
 
   editing: any = {};
 
-  tableForm!: FormGroup;
+  tableForm: FormGroup = this.formBuilder.group({
+    category: [''],
+    tags: [''],
+    glassType: [''],
+  });
 
   // Templates: Columns
   @ViewChild('defaultHdrTpl', { static: true })
@@ -42,6 +46,8 @@ export class TableComponent implements OnInit {
 
   @ViewChild('instructionsTpl', { static: true })
   instructionsTpl!: TemplateRef<any>;
+
+  name: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -96,18 +102,20 @@ export class TableComponent implements OnInit {
 
   initializeForm() {
     this.tableForm = this.formBuilder.group({
-      name: ['', Validators.required],
       category: [''],
       tags: [''],
       glassType: [''],
-    })
+    });
+    this.tableForm.addControl(this.name, new FormControl(''));
   }
 
   onSelectName(rowIndex: number) {
     this.editing[rowIndex + '-strDrink'] = true;
     let drink = this.rows[rowIndex];
+    this.name = `${rowIndex}_name`;
+    this.tableForm.addControl(this.name, new FormControl(''));
     this.tableForm.patchValue({
-      name: drink.strDrink,
+      [this.name]: drink.strDrink,
     });
     this.tableForm.updateValueAndValidity();
   }

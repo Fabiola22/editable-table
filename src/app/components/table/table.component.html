@@ -36,9 +36,9 @@
             *ngIf="editing[rowIndex + '-strDrink']"
             nz-input
             autofocus
-            formControlName="name"
+            [formControlName]="rowIndex + '_name'"
             required
-            id="name"
+            [id]="rowIndex + '_name'"
             (blur)="updateValue($event, 'strDrink', rowIndex)"/>
         </nz-form-control>
       </nz-form-item>
