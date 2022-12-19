@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ColumnMode } from '@swimlane/ngx-datatable';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Event } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as _ from 'lodash';
+import { ItemService } from 'src/app/services/item.service';
 
 @Component({
   selector: 'app-table',
@@ -18,12 +18,7 @@ export class TableComponent implements OnInit {
 
   editing: any = {};
 
-  tableForm = this.fb.group({
-    name: ['', Validators.required],
-    category: [],
-    tags: [],
-    glassType: [],
-  });
+  tableForm!: FormGroup;
 
   // Templates: Columns
   @ViewChild('defaultHdrTpl', { static: true })
@@ -49,11 +44,13 @@ export class TableComponent implements OnInit {
   instructionsTpl!: TemplateRef<any>;
 
   constructor(
-    private fb: FormBuilder,
-    private http: HttpClient
+    private formBuilder: FormBuilder,
+    private itemService: ItemService
   ) { }
 
   ngOnInit(): void {
+    this.initializeForm();
+
     this.columns = [
       {
         name: 'Name',
@@ -92,19 +89,34 @@ export class TableComponent implements OnInit {
       // },
     ];
 
-    this.http.get('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=all').subscribe((resp: any) => {
+    this.itemService.getList().subscribe((resp: any) => {
       this.rows = [...resp.drinks];
+    })
+  }
+
+  initializeForm() {
+    this.tableForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      category: [''],
+      tags: [''],
+      glassType: [''],
     })
   }
 
   onSelectName(rowIndex: number) {
     this.editing[rowIndex + '-strDrink'] = true;
+    let drink = this.rows[rowIndex];
+    this.tableForm.patchValue({
+      name: drink.strDrink,
+    });
+    this.tableForm.updateValueAndValidity();
   }
 
   updateValue(event: any, cell: string, rowIndex: number) {
     this.editing[rowIndex + '-' + cell] = false;
     this.rows[rowIndex][cell] = event.target.value;
     this.rows = [...this.rows];
+    this.initializeForm();
   }
 
 }
