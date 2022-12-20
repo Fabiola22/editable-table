@@ -16,6 +16,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { TableComponent } from './components/table/table.component';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { InputComponent } from './components/input/input.component';
 
 registerLocaleData(en);
 
@@ -24,7 +25,8 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     LayoutComponent,
-    TableComponent
+    TableComponent,
+    InputComponent
   ],
   imports: [
     BrowserModule,

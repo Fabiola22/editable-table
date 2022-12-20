@@ -18,11 +18,11 @@ export class TableComponent implements OnInit {
 
   editing: any = {};
 
+  nameForm = this.formBuilder.group({ }) as FormGroup;
+
   tableForm: FormGroup = this.formBuilder.group({
-    category: [''],
-    tags: [''],
-    glassType: [''],
-    validateTrigger: 'onBlur'
+    validateTrigger: 'onBlur',
+    nameForm: this.nameForm,
   }, { updateOn: 'blur' });
 
   // Templates: Columns
@@ -137,4 +137,11 @@ export class TableComponent implements OnInit {
     }
   }
 
+  getName(rowIndex: number) {
+    const name = `${rowIndex}_name`;
+    if (!this.nameForm.controls[name]) {
+      this.nameForm.addControl(name, new FormControl(''));
+    }
+    return name;
+  }
 }
