@@ -21,7 +21,13 @@
   <!-- Rows -->
   <!-- NAME -->
   <ng-template #nameTpl let-row="row" let-value="value" let-rowIndex="rowIndex">
-    <app-input formGroupName="nameForm" [controlName]="getName(rowIndex)"></app-input>
+    <app-input
+      [data]="row"
+      [rowIndex]="rowIndex"
+      [showInput]="editing[rowIndex + '-strDrink']"
+      formGroupName="nameForm"
+      [controlName]="getName(rowIndex)">
+    </app-input>
     <!-- <div class="flex px-6">
       <div class="drink-img block rounded-full overflow-hidden focus:outline-none focus:border-white mt-1 mr-2">
         <img [src]="row.strDrinkThumb" class="h-full w-full object-cover">

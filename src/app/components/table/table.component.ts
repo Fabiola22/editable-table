@@ -141,6 +141,7 @@ export class TableComponent implements OnInit {
     const name = `${rowIndex}_name`;
     if (!this.nameForm.controls[name]) {
       this.nameForm.addControl(name, new FormControl(''));
+      this.nameForm.controls[name].setValidators([Validators.required, Validators.maxLength(20)]);
     }
     return name;
   }

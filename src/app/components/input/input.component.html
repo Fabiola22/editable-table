@@ -1,3 +1,28 @@
 <form [formGroup]="form">
-  <input placeholder="Ex. Jane" [formControlName]="controlName" />
+    <div class="flex px-6">
+      <div class="drink-img block rounded-full overflow-hidden focus:outline-none focus:border-white mt-1 mr-2">
+        <img [src]="data.strDrinkThumb" class="h-full w-full object-cover">
+      </div>
+      <h2 title="Double click to edit"
+        (click)="onSelect()"
+        *ngIf="!showInput"
+        class="pt-2 truncate">{{ data.strDrink }}
+      </h2>
+      <nz-form-item>
+        <nz-form-control [nzValidateStatus]="validationStatus" [nzErrorTip]="nameError" nzHasFeedback>
+          <input
+            *ngIf="showInput"
+            nz-input
+            autofocus
+            [formControlName]="controlName"
+            required
+            [id]="rowIndex + '_name'"
+            (keyup.enter)="onUpdate($event, 'strDrink', rowIndex)"
+            (blur)="onUpdate($event, 'strDrink', rowIndex)"/>
+            <ng-template #nameError let-control>
+              <ng-container *ngIf="showInput">Name is required</ng-container>
+            </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
 </form>
