@@ -26,33 +26,10 @@
       [rowIndex]="rowIndex"
       [showInput]="editing[rowIndex + '-strDrink']"
       formGroupName="nameForm"
-      [controlName]="getName(rowIndex)">
+      [controlName]="getName(rowIndex)"
+      (handleSelect)="onSelectName()"
+      (handleUpdate)="updateValue($event, rowIndex)">
     </app-input>
-    <!-- <div class="flex px-6">
-      <div class="drink-img block rounded-full overflow-hidden focus:outline-none focus:border-white mt-1 mr-2">
-        <img [src]="row.strDrinkThumb" class="h-full w-full object-cover">
-      </div>
-      <h2 title="Double click to edit"
-        (click)="onSelectName(rowIndex)"
-        *ngIf="!editing[rowIndex + '-strDrink']"
-        class="pt-2 truncate">{{ row.strDrink }}
-      </h2>
-      <nz-form-item>
-        <nz-form-control [nzValidateStatus]="validationStatus" [nzErrorTip]="nameError" nzHasFeedback>
-          <input
-            *ngIf="editing[rowIndex + '-strDrink']"
-            nz-input
-            autofocus
-            [formControlName]="rowIndex + '_name'"
-            required
-            [id]="rowIndex + '_name'"
-            (blur)="updateValue($event, 'strDrink', rowIndex)"/>
-            <ng-template #nameError let-control>
-              <ng-container *ngIf="editing[rowIndex + '-strDrink']">Name is required</ng-container>
-            </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-    </div> -->
   </ng-template>
 
   <!-- Category -->

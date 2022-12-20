@@ -17,8 +17,8 @@
             [formControlName]="controlName"
             required
             [id]="rowIndex + '_name'"
-            (keyup.enter)="onUpdate($event, 'strDrink', rowIndex)"
-            (blur)="onUpdate($event, 'strDrink', rowIndex)"/>
+            (keyup.enter)="onUpdate($event, 'strDrink')"
+            (blur)="onUpdate($event, 'strDrink')"/>
             <ng-template #nameError let-control>
               <ng-container *ngIf="showInput">Name is required</ng-container>
             </ng-template>

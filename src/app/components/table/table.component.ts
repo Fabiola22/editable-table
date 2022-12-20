@@ -104,37 +104,21 @@ export class TableComponent implements OnInit {
   }
 
   initializeForm() {
-    this.tableForm.addControl(this.name, new FormControl(''));
+    this.tableForm = this.formBuilder.group({
+      validateTrigger: 'onBlur',
+      nameForm: this.nameForm,
+    }, { updateOn: 'blur' });
   }
 
-  onSelectName(rowIndex: number) {
-    this.editing[rowIndex + '-strDrink'] = true;
-    let drink = this.rows[rowIndex];
-    this.name = `${rowIndex}_name`;
-    this.tableForm.addControl(this.name, new FormControl(''));
-    this.tableForm.controls[this.name].setValidators([Validators.required, Validators.maxLength(20)]);
-    this.tableForm.patchValue({
-      [this.name]: drink.strDrink,
-    });
+  onSelectName() {
     this.tableForm.updateValueAndValidity();
   }
 
-  updateValue(event: any, cell: string, rowIndex: number) {
-    if (this.tableForm.valid) {
-      this.validationStatus = 'success';
-      this.editing[rowIndex + '-' + cell] = false;
-      this.rows[rowIndex][cell] = event.target.value;
-      this.rows = [...this.rows];
-      this.initializeForm();
-    } else {
-      Object.values(this.tableForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-          this.validationStatus = 'error';
-        }
-      });
-    }
+  updateValue($event: any, rowIndex: number) {
+    this.editing[rowIndex + '-' + $event.cell] = false;
+    this.rows[rowIndex][$event.cell] = $event.event.target.value;
+    this.rows = [...this.rows];
+    this.initializeForm();
   }
 
   getName(rowIndex: number) {
